@@ -2,8 +2,8 @@
 命令执行不回显但DNS协议出网的命令回显场景解决方案
 
 # 使用
-- python3 HexDnsEcho.py
-- python3 CommandGen.py whoami
+- python3 HexDnsEcho.py #本机执行
+- python3 CommandGen.py whoami #生成的命令模板在目标机器上执行
 <img width="956" alt="image" src="https://user-images.githubusercontent.com/55974091/177919878-2fa5fa06-81aa-4b93-a57c-8d17fa5def27.png">
 
 # Linux
