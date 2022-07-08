@@ -13,5 +13,5 @@
 <img width="719" alt="image" src="https://user-images.githubusercontent.com/55974091/177920198-dc64a4fd-7458-4fa6-a0a9-927d11bfdd57.png">
 
 # 参考项目
-- 以下项目为主要代码来源，本项目主要是填充linux的命令代码模板，并稍微修改HexDnsEcho文件代码
+- 以下项目为主要代码来源(感谢Dr-S1x17师傅分享的思路)，本项目主要是填充linux的命令代码模板，并稍微修改HexDnsEcho文件代码
 - https://github.com/Dr-S1x17/NoNetCmdEcho-FileW.e
