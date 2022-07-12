@@ -4,6 +4,7 @@ import json
 import binascii
 
 # author: 617sec //https://github.com/Dr-S1x17
+# author: sv3nbeast //https://github.com/sv3nbeast/DnslogCmdEcho
 
 requestTime = 3 # DNSLog platform interval per request
 commandHex = {}
@@ -69,7 +70,10 @@ def deal_data(data: list):
         Head = '\033[36m'
         End = '\033[0m'
         try:
-            print(Head + binascii.a2b_hex(commandResult).decode('gb2312') + End)
+            try:#gb2312解码
+                print(Head + binascii.a2b_hex(commandResult).decode('gb2312') + End)
+            except UnicodeDecodeError:#utf-8解码 linux存在中文字符需要这个解码
+                print(Head + binascii.a2b_hex(commandResult).decode('utf-8') + End)
         except:
             print('Maybe use START to execute commands and cause DNSLog records to be lost..\nIt is recommended to remove START from the command')
         print('----Get Result End!----')
@@ -84,7 +88,7 @@ if __name__ == '__main__':
 
         for i in range(requestTime,-1,-1):
             print('\r', 'Wait DNSLog data: {}s...'.format(str(i)), end='') 
-            time.sleep(1)   
+            time.sleep(1)
         try:
             data = { 'domain':domain, 'token':token }
             url = 'http://dig.pm/get_results'
