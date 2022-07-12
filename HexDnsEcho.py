@@ -124,3 +124,4 @@ if __name__ == '__main__':
 
         dataList = get_dnslogdata()
         deal_data(dataList)
+        
