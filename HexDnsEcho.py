@@ -2,6 +2,9 @@ import time
 import requests
 import json
 import binascii
+import datetime
+import pytz
+from tzlocal import get_localzone
 
 # author: 617sec //https://github.com/Dr-S1x17
 # author: sv3nbeast //https://github.com/sv3nbeast/DnslogCmdEcho
@@ -9,6 +12,29 @@ import binascii
 requestTime = 3 # DNSLog platform interval per request
 commandHex = {}
 
+def timezone_change(time_str, src_timezone, dst_timezone=None, time_format=None):
+    """
+    change timezone to utc timezone
+    if dst_timezone is none, change time to localtime
+
+    :param time_str:
+    :param src_timezone: source timezone
+    :param dst_timezone: target timezone; if equals none, change to localtime
+    """
+    if not time_format:
+        time_format = "%Y-%m-%d %H:%M:%S"
+
+    old_dt = datetime.datetime.strptime(time_str, time_format)
+
+    dt = pytz.timezone(src_timezone).localize(old_dt)
+    utc_dt = pytz.utc.normalize(dt.astimezone(pytz.utc))
+
+    if dst_timezone:
+        _timezone = pytz.timezone(dst_timezone)
+        new_dt = _timezone.normalize(utc_dt.astimezone(_timezone))
+    else:
+        new_dt = utc_dt.astimezone()
+    return new_dt.strftime(time_format)
 
 def get_new_config():
     global domain,token,lastFinishTime,commandStartPos,commandEndPos,lastRecordLen,finishOnce
@@ -19,12 +45,16 @@ def get_new_config():
     token = dataResult['token']
     with open('config617','w') as f:
         f.write(dataResult['domain'])
-    lastFinishTime = time.strftime("%Y-%m-%d %X", time.localtime()) # record last finish time
+    # dig.pm's timezone is utc，need to change timezone
+    localTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) # get localtime
+    lastFinishTime = timezone_change(localTime, src_timezone="Asia/Shanghai", dst_timezone="UTC") # record last finish time
+    print(lastFinishTime)
     commandStartPos = 0
     commandEndPos = 0
     lastRecordLen = 0
     finishOnce = False
-    
+
+
 # get DNSLog data 
 def get_dnslogdata() -> list:
     if commandStartPos and commandEndFlag: 
