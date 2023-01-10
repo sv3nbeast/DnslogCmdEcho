@@ -47,7 +47,7 @@ def get_new_config():
         f.write(dataResult['domain'])
     # dig.pm's timezone is utc，need to change timezone
     localTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) # get localtime
-    lastFinishTime = timezone_change(localTime, src_timezone="Asia/Shanghai", dst_timezone="UTC") # record last finish time
+    lastFinishTime = timezone_change(localTime, src_timezone=str(get_localzone()), dst_timezone="UTC") # record last finish time
     print(lastFinishTime)
     commandStartPos = 0
     commandEndPos = 0
